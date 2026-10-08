@@ -1,38 +1,34 @@
-# RipTide 🌊
+# RipTide
 
-RipTide est une suite d'outils multimédia modulaire, rapide et élégante, construite avec **Tauri (Rust)** et **React (TypeScript)**. 
-Son objectif initial est de fournir une interface minimaliste pour télécharger des vidéos et extraire des flux audio/vidéo avec une interface utilisateur de très haute qualité (Direction Artistique "Minecraft Riptide" en mode sombre exclusif).
+Outil de bureau pour télécharger et manipuler des fichiers audio et vidéo. Construit avec Tauri (Rust) et React (TypeScript).
 
-L'application évolue actuellement vers une suite de création contenant la génération de sous-titres et l'isolation vocale (Acapella).
+## Ce que fait l'application
 
-## Fonctionnalités (MVP)
+- Télécharge des vidéos depuis n'importe quelle URL supportée par `yt-dlp`.
+- Convertit directement en MP3 ou assemble la vidéo et l'audio avec `ffmpeg`.
+- Propose une interface sombre inspirée du Riptide de Minecraft.
+- Les prochains modules prévus intègrent la séparation vocale (Acapella) et la génération de sous-titres locaux.
 
-- **Téléchargement Universel** : Basé sur `yt-dlp` et `ffmpeg` pour extraire depuis (presque) n'importe quelle source.
-- **Sélection de Résolution** : Choix dynamique de la qualité vidéo (Max, Basse) ou Audio Seulement (MP3).
-- **Interface Minimaliste** : Animations fluides, vagues de fond en CSS pur, et Sidebar dynamique.
-- **Support des Fichiers Massifs** : Formattage intelligent pour les vidéos de plus de 24h et les fichiers multi-gigaoctets.
-- **Haute Performance** : Backend asynchrone en Rust pur (Tokio), ne bloquant jamais l'interface React.
+## Prérequis
 
-## Pré-requis
+Votre machine doit disposer des outils suivants :
 
-- [Rust](https://www.rust-lang.org/) (Version stable)
-- [Node.js](https://nodejs.org/) & `pnpm`
-- **FFmpeg** et **yt-dlp** doivent être installés et accessibles dans le `PATH` de votre système.
+- Rust et Cargo
+- Node.js et pnpm
+- `yt-dlp` et `ffmpeg` accessibles dans le PATH de l'ordinateur.
 
-## Installation & Développement
+## Installation
+
+Pour lancer l'environnement de développement local :
 
 ```bash
-# Installer les dépendances frontend
 pnpm install
-
-# Lancer l'environnement de développement (Tauri + Vite)
 pnpm tauri dev
 ```
 
-## Structure du Projet
+## Structure du code
 
-L'application respecte les principes "Antislop" (code modulaire, commentaires utiles uniquement) :
-- `src-tauri/` : Backend en Rust (gestion système, exécution CLI, télémétrie)
-- `src/` : Frontend React
-  - `components/` : Éléments d'interface réutilisables (SplashScreen, VideoCard)
-  - `modules/` : Les différents outils de la suite (Downloader, Acapella, Subtitles)
+L'architecture sépare l'interface de l'exécution système :
+
+- `src/` : Le code React. Les outils sont rangés dans `src/modules/` et l'interface commune dans `src/components/`.
+- `src-tauri/src/commands/download.rs` : Le code Rust qui pilote l'exécution asynchrone de `yt-dlp` et `ffmpeg`.
