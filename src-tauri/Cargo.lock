@@ -4199,6 +4199,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "riptide"
+version = "0.1.0"
+dependencies = [
+ "futures",
+ "reqwest 0.13.5",
+ "rusty_ytdl",
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-dialog",
+ "tauri-plugin-opener",
+ "tokio",
+]
+
+[[package]]
 name = "rustc-hash"
 version = "2.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5377,22 +5393,6 @@ dependencies = [
  "dunce",
  "embed-resource",
  "toml 1.1.6+spec-1.1.0",
-]
-
-[[package]]
-name = "temp_app"
-version = "0.1.0"
-dependencies = [
- "futures",
- "reqwest 0.13.5",
- "rusty_ytdl",
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
- "tauri-plugin-dialog",
- "tauri-plugin-opener",
- "tokio",
 ]
 
 [[package]]
