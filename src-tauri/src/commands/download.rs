@@ -69,7 +69,7 @@ async fn run_ytdlp(
         "bestvideo[height<=1080]+bestaudio/best[height<=1080]".to_string()
     };
 
-    let mut command = Command::new("yt-dlp");
+    let mut command = Command::new(&crate::commands::setup::get_binaries_paths(app).0);
     command.args(["--ignore-config", "--no-playlist", "--newline", "-f", &format, "-o", &output_path]);
     
     if is_audio_only {
@@ -145,15 +145,16 @@ async fn run_http_test(
 }
 
 async fn run_ffmpeg_mux(
+    app: &AppHandle,
     is_audio_only: bool,
     temp_video: &str,
     temp_audio: &str,
     output_file: &std::path::Path,
 ) -> Result<(), String> {
     let status = if is_audio_only {
-        Command::new("ffmpeg").args(["-y", "-i", temp_audio, "-q:a", "0", "-map", "0:a:0"]).arg(output_file).status().await
+        Command::new(&crate::commands::setup::get_binaries_paths(app).1).args(["-y", "-i", temp_audio, "-q:a", "0", "-map", "0:a:0"]).arg(output_file).status().await
     } else {
-        Command::new("ffmpeg").args(["-y", "-i", temp_video, "-i", temp_audio, "-map", "0:v:0", "-map", "1:a:0", "-c", "copy"]).arg(output_file).status().await
+        Command::new(&crate::commands::setup::get_binaries_paths(app).1).args(["-y", "-i", temp_video, "-i", temp_audio, "-map", "0:v:0", "-map", "1:a:0", "-c", "copy"]).arg(output_file).status().await
     };
 
     let _ = fs::remove_file(temp_video).await;
@@ -192,7 +193,7 @@ pub async fn start_download(
         run_ytdlp(&app, &state, &payload.url, &output_file, is_audio_only, is_low_quality, output_format).await?;
     } else {
         run_http_test(&app, &state, is_audio_only, temp_video, temp_audio).await?;
-        run_ffmpeg_mux(is_audio_only, temp_video, temp_audio, &output_file).await?;
+        run_ffmpeg_mux(&app, is_audio_only, temp_video, temp_audio, &output_file).await?;
     }
 
     let _ = app.emit("download-progress", ProgressPayload {

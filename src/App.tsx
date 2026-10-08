@@ -4,8 +4,11 @@
  * et les appels IPC vers le backend Tauri.
  * DA: Noir abyssal, écume blanche, motion design fluide.
  */
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { invoke } from "@tauri-apps/api/core";
+import { listen } from "@tauri-apps/api/event";
 import { SplashScreen } from "./components/SplashScreen";
+import SetupScreen from "./components/SetupScreen";
 import { Downloader } from "./modules/Downloader";
 import { SubtitleGenerator } from "./modules/SubtitleGenerator";
 import { VocalRemover } from "./modules/VocalRemover";
@@ -14,11 +17,34 @@ type Module = "download" | "subtitles" | "acapella";
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
+  const [dependenciesOk, setDependenciesOk] = useState(false);
+  const [setupProgress, setSetupProgress] = useState<{step: string, percentage: number} | null>(null);
   const [activeModule, setActiveModule] = useState<Module>("download");
   const [isExpanded, setIsExpanded] = useState(false);
 
+  useEffect(() => {
+    if (!showSplash) {
+      invoke<boolean>("check_dependencies").then((ok) => {
+        if (ok) {
+          setDependenciesOk(true);
+        } else {
+          listen<{step: string, percentage: number}>("setup-progress", (e) => {
+            setSetupProgress(e.payload);
+          });
+          invoke("install_dependencies")
+            .then(() => setDependenciesOk(true))
+            .catch(console.error);
+        }
+      });
+    }
+  }, [showSplash]);
+
   if (showSplash) {
     return <SplashScreen onFinish={() => setShowSplash(false)} />;
+  }
+
+  if (!dependenciesOk) {
+    return <SetupScreen progress={setupProgress} />;
   }
 
   return (

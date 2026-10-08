@@ -19,7 +19,9 @@ pub fn run() {
             commands::env::check_environment,
             commands::inspect::inspect_url,
             commands::download::start_download,
-            commands::download::cancel_download
+            commands::download::cancel_download,
+            commands::setup::check_dependencies,
+            commands::setup::install_dependencies
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

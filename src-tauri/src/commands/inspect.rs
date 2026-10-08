@@ -22,14 +22,14 @@ pub struct VideoMetadata {
 }
 
 #[tauri::command]
-pub async fn inspect_url(url: String) -> Result<VideoMetadata, String> {
+pub async fn inspect_url(app: tauri::AppHandle, url: String) -> Result<VideoMetadata, String> {
     if !url.starts_with("http://") && !url.starts_with("https://") {
         return Err("ERR_INVALID_URL".into());
     }
 
     if url.contains("youtube.com") || url.contains("youtu.be") {
         use std::process::Stdio;
-        let output = std::process::Command::new("yt-dlp")
+        let output = std::process::Command::new(&crate::commands::setup::get_binaries_paths(&app).0)
             .args([
                 "--ignore-config",
                 "--no-playlist",
