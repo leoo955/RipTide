@@ -15,3 +15,4 @@ export interface VideoMetadata {
   author: string;
   resolutions: VideoResolution[];
 }
+

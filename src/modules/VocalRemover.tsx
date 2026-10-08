@@ -19,3 +19,4 @@ export function VocalRemover() {
     </section>
   );
 }
+

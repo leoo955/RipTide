@@ -97,3 +97,4 @@ export function DownloadProgress({ onCancel, onSuccess }: DownloadProgressProps)
     </div>
   );
 }
+

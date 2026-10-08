@@ -31,3 +31,4 @@ pub struct ProgressPayload {
     pub total_bytes: u64,
     pub eta_sec: u64,
 }
+

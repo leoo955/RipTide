@@ -9,3 +9,4 @@ pub fn check_environment() -> Result<bool, String> {
         _ => Ok(false),
     }
 }
+

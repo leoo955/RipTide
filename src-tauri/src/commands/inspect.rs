@@ -89,3 +89,4 @@ pub async fn inspect_url(url: String) -> Result<VideoMetadata, String> {
 
     Err("ERR_URL_NOT_SUPPORTED_YET".into())
 }
+
