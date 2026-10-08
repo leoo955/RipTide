@@ -28,7 +28,7 @@ function App() {
         <div className="wave-layer wave-layer-2"></div>
       </div>
 
-      {/* Sidebar Minimaliste Collapsible / Bottom Nav sur mobile */}
+
       <nav 
         className={`fixed z-20 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] bg-black/60 backdrop-blur-md border-white/5 
           bottom-0 left-0 w-full h-16 border-t flex flex-row items-center justify-around 

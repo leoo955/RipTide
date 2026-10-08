@@ -55,7 +55,6 @@ pub async fn start_download(
     let target_dir = std::path::Path::new(&payload.destination);
     let output_file = target_dir.join(format!("{}.{}", safe_title, output_format));
 
-    // Nettoyage préalable
     let _ = fs::remove_file(temp_video).await;
     let _ = fs::remove_file(temp_audio).await;
 
@@ -64,7 +63,6 @@ pub async fn start_download(
     let mut last_emit_time = Instant::now();
     let mut last_bytes_received = 0u64;
 
-    // Fonction d'aide pour émettre la progression
     let emit_progress = |bytes_received: u64,
                          total_bytes: &mut u64,
                          last_emit_time: &mut Instant,
@@ -182,7 +180,6 @@ pub async fn start_download(
         );
         return Ok(());
     } else {
-        // Fallback pour le MVP sur le fichier test si non YT
         let test_url = "https://github.com/tauri-apps/tauri/archive/refs/tags/tauri-v2.0.0.zip";
         let client = Client::new();
         let mut response = client
@@ -217,13 +214,11 @@ pub async fn start_download(
                 &mut last_bytes_received,
             );
         }
-        // Pour simuler la presence de l'audio dans le test
         if !is_audio_only {
             let _ = fs::copy(temp_video, temp_audio).await;
         }
     }
 
-    // Phase de Multiplexage via FFmpeg
     let status = if is_audio_only {
         Command::new("ffmpeg")
             .args(["-y", "-i", temp_audio, "-q:a", "0", "-map", "0:a:0"])
@@ -243,7 +238,6 @@ pub async fn start_download(
             .map_err(|_| "ERR_FFMPEG_MISSING".to_string())?
     };
 
-    // Nettoyage
     let _ = fs::remove_file(temp_video).await;
     let _ = fs::remove_file(temp_audio).await;
 

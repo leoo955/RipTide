@@ -8,13 +8,9 @@ export function SplashScreen({ onFinish }: SplashScreenProps) {
   const [stage, setStage] = useState(0);
 
   useEffect(() => {
-    // Stage 1: Entrance
     const t1 = setTimeout(() => setStage(1), 100);
-    // Stage 2: Reveal wave
     const t2 = setTimeout(() => setStage(2), 1500);
-    // Stage 3: Fade out
     const t3 = setTimeout(() => setStage(3), 3500);
-    // Stage 4: Unmount
     const t4 = setTimeout(() => onFinish(), 4500);
 
     return () => {
@@ -33,12 +29,12 @@ export function SplashScreen({ onFinish }: SplashScreenProps) {
     >
       <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
         
-        {/* Background dark waves */}
+
         <div className={`absolute inset-0 transition-opacity duration-1000 ${stage >= 1 ? 'opacity-30' : 'opacity-0'}`}>
            <div className="wave-layer wave-layer-2" />
         </div>
 
-        {/* Big RIPTIDE text - background layer */}
+
         <h1 
           className={`absolute text-[15vw] font-black tracking-tighter text-white/10 select-none transition-all duration-[2000ms] cubic-bezier(0.16, 1, 0.3, 1) ${
             stage >= 1 ? "scale-100 blur-0" : "scale-150 blur-xl"
@@ -47,7 +43,7 @@ export function SplashScreen({ onFinish }: SplashScreenProps) {
           RIPTIDE
         </h1>
 
-        {/* Foreground dynamic text with GTA VI style mask */}
+
         <div 
           className={`absolute flex items-center justify-center transition-all duration-[2000ms] cubic-bezier(0.16, 1, 0.3, 1) ${
             stage >= 2 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
