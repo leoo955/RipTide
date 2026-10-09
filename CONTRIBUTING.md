@@ -1,6 +1,6 @@
 # Guide de Contribution (Community Guidelines)
 
-Merci de l'intérêt que vous portez à **RipTide** ! 🌊 
+Merci de l'intérêt que vous portez à **RipTide** ! 
 Nous sommes ravis de vous accueillir dans la communauté. Voici les lignes directrices pour participer sainement au projet.
 
 ## 🛠 Philosophie du Projet
@@ -10,7 +10,7 @@ Ce projet respecte activement les **principes "Antislop"** pour la qualité du c
 2. **Commentaires utiles uniquement :** Évitez le bruit visuel (ne commentez pas ce que fait le code de manière évidente). Expliquez toujours le *pourquoi* (les décisions techniques) et non le *comment*.
 3. **Séparation des responsabilités :** Gardez l'interface React légère. Les opérations système lourdes (téléchargement, parsing, ffmpeg) doivent impérativement être gérées par le backend Rust.
 
-## 🚀 Comment Contribuer ?
+##  Comment Contribuer ?
 
 ### 1. Signaler un Bug ou Proposer une Idée
 - Vérifiez d'abord dans les Issues du dépôt si le sujet n'a pas déjà été abordé.
@@ -25,7 +25,7 @@ Ce projet respecte activement les **principes "Antislop"** pour la qualité du c
 4. Faites des commits avec des messages clairs (ex: `feat(ui): ajout du mode clair`).
 5. Ouvrez une Pull Request et décrivez précisément vos changements.
 
-## 💻 Environnement de Développement
+##  Environnement de Développement
 
 Pré-requis :
 - **Rust** (stable)

@@ -29,18 +29,19 @@ pub async fn inspect_url(app: tauri::AppHandle, url: String) -> Result<VideoMeta
 
     if url.contains("youtube.com") || url.contains("youtu.be") {
         use std::process::Stdio;
-        let output = std::process::Command::new(&crate::commands::setup::get_binaries_paths(&app).0)
-            .args([
-                "--ignore-config",
-                "--no-playlist",
-                "--dump-single-json",
-                "--socket-timeout",
-                "10",
-            ])
-            .arg(&url)
-            .stdout(Stdio::piped())
-            .output()
-            .map_err(|_| "ERR_YTDLP_MISSING: installez yt-dlp".to_string())?;
+        let output =
+            std::process::Command::new(&crate::commands::setup::get_binaries_paths(&app).0)
+                .args([
+                    "--ignore-config",
+                    "--no-playlist",
+                    "--dump-single-json",
+                    "--socket-timeout",
+                    "10",
+                ])
+                .arg(&url)
+                .stdout(Stdio::piped())
+                .output()
+                .map_err(|_| "ERR_YTDLP_MISSING: installez yt-dlp".to_string())?;
 
         if !output.status.success() {
             let details = String::from_utf8_lossy(&output.stderr);
@@ -89,4 +90,3 @@ pub async fn inspect_url(app: tauri::AppHandle, url: String) -> Result<VideoMeta
 
     Err("ERR_URL_NOT_SUPPORTED_YET".into())
 }
-

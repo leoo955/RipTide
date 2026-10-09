@@ -12,6 +12,7 @@ import SetupScreen from "./components/SetupScreen";
 import { Downloader } from "./modules/Downloader";
 import { SubtitleGenerator } from "./modules/SubtitleGenerator";
 import { VocalRemover } from "./modules/VocalRemover";
+import { checkForUpdates } from "./modules/updater";
 
 type Module = "download" | "subtitles" | "acapella";
 
@@ -24,6 +25,9 @@ function App() {
 
   useEffect(() => {
     if (!showSplash) {
+      // Vérifie les mises à jour en arrière-plan
+      checkForUpdates();
+      
       invoke<boolean>("check_dependencies").then((ok) => {
         if (ok) {
           setDependenciesOk(true);
