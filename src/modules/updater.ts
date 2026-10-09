@@ -1,6 +1,5 @@
 import { check } from '@tauri-apps/plugin-updater';
 import { ask, message } from '@tauri-apps/plugin-dialog';
-import { relaunch } from '@tauri-apps/plugin-process'; // Needs to be installed, or we just rely on the user to manually restart
 
 export async function checkForUpdates() {
   try {
